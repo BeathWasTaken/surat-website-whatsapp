@@ -162,6 +162,38 @@ dihitung otomatis dari panjang teks.
 | Geser / panah / `Esc`           | Navigasi & tutup lightbox      |
 | Ketuk "Tidak"                   | Tombolnya kabur terus          |
 | Tombol 🎵                       | Matikan / nyalakan musik       |
+| Panah ‹ di header               | Balik ke daftar chat — **hanya aktif setelah surat selesai** |
+
+---
+
+## 🎨 Menyesuaikan warna & gradient
+
+Semua warna dan gradient ada di `:root` pada `assets/css/style.css`:
+
+```css
+:root{
+  --wa-accent:#00a884;      /* warna utama   */
+  --chat-bg:#efeae2;        /* latar chat    */
+  --ink:#111b21;            /* teks          */
+
+  --g-head:linear-gradient(...);        /* header chat   */
+  --g-bubble-in:linear-gradient(...);   /* bubble masuk  */
+  --g-bubble-out:linear-gradient(...);  /* bubble keluar */
+  --g-field:linear-gradient(...);       /* kolom ketik   */
+  --g-footer:linear-gradient(...);      /* bar bawah     */
+  --g-dialog:linear-gradient(...);      /* popup konfirmasi */
+  --g-key:linear-gradient(...);         /* tombol keypad */
+  --g-chip:linear-gradient(...);        /* chip pilihan  */
+  --g-accent:linear-gradient(...);      /* tombol hijau  */
+  --g-list:linear-gradient(...);        /* layar daftar  */
+  --g-pill:linear-gradient(...);        /* pil "Hari ini" */
+  --g-pill-note:linear-gradient(...);   /* pil catatan   */
+
+  --sheen:inset 0 1px 0 rgba(255,255,255,.55);  /* highlight tepi */
+}
+```
+
+Ganti satu nilai itu sudah cukup — tidak perlu menyentuh HTML atau JS.
 
 ---
 

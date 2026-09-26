@@ -10,6 +10,13 @@ window.Joki = window.Joki || {};
 
   const box = $('#messages'), statusEl = $('#status');
   const composer = $('#composer'), chips = $('#chips'), composerText = $('#composerText');
+  const backBtn = $('#backBtn');
+
+  /* Tombol back baru bisa dipencet setelah surat selesai (showEnd). */
+  const setBackEnabled = on => {
+    backBtn.disabled = !on;
+    backBtn.setAttribute('aria-disabled', String(!on));
+  };
 
   let lastSender = null, runId = 0, timers = [], voiceAudio = null;
   let advBusy = false, advAction = null, advMsg = '';
@@ -346,16 +353,19 @@ window.Joki = window.Joki || {};
     type();
   }
   async function submitAdv() {
-    if (advBusy || !advAction) return;
+    if(advBusy || !advAction) return;
     advBusy = true;
+    const myRun = runId;
     const action = advAction; advAction = null;
     composer.classList.add('sent');
     await sleep(220);
-    await sendOut(advMsg, runId);
+    await sendOut(advMsg, myRun);
 
     resetComposer();
     await sleep(700);
     advBusy = false;
+    /* Kalau halaman sudah berganti (mis. resetChat) jangan ikut majukan. */
+    if(runId !== myRun) return;
     action();
   }
 
@@ -370,6 +380,7 @@ window.Joki = window.Joki || {};
       chips.hidden = false;
     } else chips.hidden = true;
     showAdvancer('Baca dari awal', () => playPage(0));
+    setBackEnabled(true);
   }
 
   function showNext(i) {
@@ -441,6 +452,7 @@ window.Joki = window.Joki || {};
     timers.forEach(clearInterval); timers = [];
     if (voiceAudio) { voiceAudio.pause(); voiceAudio = null; }
     stopRain();
+    setBackEnabled(false);
     scenes.chat.querySelectorAll('.fly').forEach(h => h.remove());
     box.innerHTML = ''; lastSender = null;
     chips.hidden = true; chips.innerHTML = ''; composer.hidden = false;
@@ -480,6 +492,13 @@ window.Joki = window.Joki || {};
       J.core.initAudio();
       goTo('chat');
       if (!state.started) { state.started = true; setTimeout(() => playPage(0), 750); }
+    });
+
+    setBackEnabled(false);
+    backBtn.addEventListener('click', () => {
+      if(backBtn.disabled) return;
+      resetChat();
+      goTo('list');
     });
 
     composer.addEventListener('click', submitAdv);
