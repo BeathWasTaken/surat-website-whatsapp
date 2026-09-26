@@ -71,7 +71,28 @@
     </section>
 
     <section class="scene" id="scene-list" aria-label="Daftar chat">
-      <div class="list-head"><h1>Chat</h1></div>
+      <div class="list-head" aria-hidden="true">
+        <h1>Chats</h1>
+        <span class="head-acts">
+          <span class="head-btn" role="presentation">
+            <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
+          </span>
+          <span class="head-btn is-fab" role="presentation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </span>
+      </div>
+      <div class="list-search" aria-hidden="true">
+        <span class="s-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.2 16.2L21 21"/></svg>
+        </span>
+        <span class="s-field">Search or start a new chat</span>
+      </div>
+      <div class="list-filters" aria-hidden="true">
+        <span class="chip is-on" role="presentation">All</span>
+        <span class="chip" role="presentation">Unread</span>
+        <span class="chip" role="presentation">Groups</span>
+      </div>
       <button class="list-row" id="openChat">
         <span class="avatar" data-avatar></span>
         <span class="list-main">
@@ -83,7 +104,7 @@
           <span class="badge">1</span>
         </span>
       </button>
-      <p class="list-hint">Ketuk chat untuk membuka pesannya.</p>
+      <p class="list-hint">Took chat to open the message.</p>
     </section>
 
     <section class="scene" id="scene-chat" aria-label="Percakapan">

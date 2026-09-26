@@ -164,6 +164,32 @@ dihitung otomatis dari panjang teks.
 | Tombol 🎵                       | Matikan / nyalakan musik       |
 | Panah ‹ di header               | Balik ke daftar chat — **hanya aktif setelah surat selesai**. Kalau lalu dibuka lagi, surat diputar dari awal |
 
+### Layar daftar chat
+
+Bentuknya mengikuti WhatsApp: judul "Chats" rata kiri dengan ikon **⋮** lalu
+**+** di kanan, search bar pill di bawahnya, lalu deretan chip filter.
+
+Ikon **⋮**, **+**, search bar, dan chip filter itu **murni hiasan** — tidak
+melakukan apa-apa kalau diketuk. Semuanya dibungkus `aria-hidden="true"` dan
+`pointer-events:none`, jadi tidak masuk urutan tab dan tidak bisa diklik.
+Cuma baris chat-nya (`#openChat`) yang benar-benar berfungsi.
+
+| Bagian    | Kelas             | Catatan                                            |
+| --------- | ----------------- | -------------------------------------------------- |
+| Ikon ⋮    | `.head-btn`       | Polos, warna teks biasa                            |
+| Ikon +    | `.head-btn.is-fab`| Lingkaran hijau `--wa-accent` + bayangan lembut     |
+| Chip aktif| `.chip.is-on`     | Latar hijau `--wa-accent`, teks putih              |
+| Chip lain | `.chip`           | Latar `#f0f2f5`, teks `--ink`                      |
+
+State "terpilih" ditandai kelas `is-on` di HTML, jadi **All** sudah aktif
+secara default tanpa perlu JavaScript.
+
+Kalau mau search bar atau chip-nya bisa diketuk beneran, ganti
+`<div class="list-search">` dengan `<input class="list-search">` dan chip
+`<span>` dengan `<button>`, lalu kembalikan `pointer-events:auto`. Untuk
+mengganti chip aktif, pindahkan kelas `is-on` dan hook
+`.list-filters` ke `chat.js`.
+
 ---
 
 ## 🎨 Menyesuaikan warna

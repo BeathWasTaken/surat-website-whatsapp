@@ -226,11 +226,46 @@
   .dlg-btn:focus-visible{ outline:2px solid var(--wa-accent); outline-offset:2px; }
 
   #scene-list{ background:#fff; display:flex; flex-direction:column; }
-  .list-head{ padding:calc(env(safe-area-inset-top,0px) + 1.25rem) 1.25rem .75rem; }
-  .list-head h1{ margin:0; font-size:1.6rem; font-weight:700; color:var(--wa-head); letter-spacing:-.01em; }
+  .list-head{
+    display:flex; align-items:center; gap:.75rem;
+    padding:calc(env(safe-area-inset-top,0px) + 1.1rem) 1rem .9rem 1.25rem;
+  }
+  .list-head h1{ flex:1; margin:0; font-size:1.45rem; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+  .head-acts{ flex:none; display:flex; align-items:center; gap:.15rem; }
+  .head-btn{
+    width:2.4rem; height:2.4rem; border-radius:50%; color:var(--ink);
+    display:grid; place-items:center; pointer-events:none;
+  }
+  .head-btn svg{ width:1.3rem; height:1.3rem; }
+  .head-btn.is-fab{
+    background:var(--wa-accent); color:#fff;
+    box-shadow:0 1px 2px rgba(11,20,26,.16), 0 2px 6px rgba(0,168,132,.28);
+  }
+  .list-search{
+    flex:none; display:flex; align-items:center; gap:.6rem;
+    margin:0 1rem .6rem; padding:.5rem .85rem; border-radius:999px;
+    background:#f0f2f5; pointer-events:none;
+  }
+  .list-search .s-ico{ flex:none; width:1.15rem; height:1.15rem; color:var(--ink-soft); }
+  .list-search .s-ico svg{ width:100%; height:100%; }
+  .list-search .s-field{
+    flex:1; min-width:0; font-size:.95rem; line-height:1.3; color:var(--ink-soft);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .list-filters{
+    flex:none; display:flex; align-items:center; gap:.4rem;
+    padding:0 1rem .7rem; pointer-events:none;
+  }
+  .list-filters .chip{
+    flex:none; padding:.34rem .75rem; border-radius:999px;
+    font-size:.82rem; font-weight:500; line-height:1.3;
+    background:#f0f2f5; color:var(--ink);
+  }
+  .list-filters .chip.is-on{ background:var(--wa-accent); color:#fff; }
   .list-row{
     display:flex; align-items:center; gap:.9rem; width:100%; text-align:left;
-    padding:.8rem 1.25rem; border:0; background:transparent; cursor:pointer;
+    padding:.8rem 1.25rem; border:0; border-top:1px solid rgba(11,20,26,.08);
+    background:transparent; cursor:pointer;
     transition:background .15s ease;
   }
   .list-row:hover{ background:#f5f6f6; }
@@ -682,7 +717,7 @@
     .messages{ padding:.9rem 1.5rem 1.75rem; }
     .dialog-text{ padding:2rem 1.7rem 1.4rem; }
 
-    .list-head,.list-row,.list-hint{ width:100%; max-width:44rem; margin-inline:auto; }
+    .list-head,.list-search,.list-filters,.list-row,.list-hint{ width:100%; max-width:44rem; margin-inline:auto; }
   }
 
   @media (prefers-reduced-motion: reduce){
