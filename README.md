@@ -173,11 +173,14 @@ Semua warna ada di `:root` pada `assets/css/style.css`. Semuanya **warna rata**
 
 ```css
 :root{
-  --wa-head:#008069;      /* header chat      */
+  --wa-head:#008069;      /* warna header pekat  */
   --wa-accent:#00a884;    /* warna utama      */
   --bubble-in:#ffffff;   /* bubble masuk     */
   --bubble-out:#d9fdd3;   /* bubble keluar    */
   --chat-bg:#efeae2;      /* latar chat       */
+  --head-glass:rgba(0,128,105,.82);  /* header frosted */
+  --head-blur:blur(14px) saturate(165%);
+  --foot-glass:rgba(240,242,245,.86); /* footer frosted */
   --ink:#111b21;          /* teks utama       */
   --ink-soft:#667781;     /* teks sekunder    */
   --tick:#53bdeb;         /* centang biru     */
@@ -186,6 +189,24 @@ Semua warna ada di `:root` pada `assets/css/style.css`. Semuanya **warna rata**
 ```
 
 Ganti satu nilai itu sudah cukup — tidak perlu menyentuh HTML atau JS.
+
+### Header & footer frosted (efek kaca buram ala iOS)
+
+Header dan footer chat bukan lagi warna pekat, tapi lapisan semi transparan
+di atas pola doodle, jadi isinya kelihatan **bebayang**:
+
+```css
+--head-glass  /* angka alpha = seberapa tembus. .82 = pekat, .6 = lebih bening */
+--head-blur   /* blur() = seberapa buram, saturate() = warnanya makin kaya */
+```
+
+Pola doodle pindah ke `#scene-chat::before` (latar diam, menutupi satu
+layar penuh). Ini penting: kalau polanya ikut ter-scroll bersama
+`.messages`, yang di-blur header cuma warna beige rata sehingga efek kacanya
+tidak kelihatan sama sekali.
+
+Area `.messages` tetap transparan dan normal — isinya tidak pernah tertutup
+header maupun footer, jadi tidak perlu padding atas khusus.
 
 Efek kedalaman datang dari **opasitas bayangan**, bukan gradient.
 Kalau ingin lebih kalem, turunkan angka setelah titik di `box-shadow`:
