@@ -71,15 +71,16 @@
     </section>
 
     <section class="scene" id="scene-list" aria-label="Daftar chat">
-      <div class="list-head" aria-hidden="true">
+      <div class="list-head">
         <h1>Chats</h1>
         <span class="head-acts">
-          <span class="head-btn" role="presentation">
+          <span class="head-btn is-deco" role="presentation" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
           </span>
-          <span class="head-btn is-fab" role="presentation">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-          </span>
+          <button class="head-btn is-fab" id="listMusicBtn" type="button" aria-pressed="false" aria-label="Putar lagu">
+            <svg class="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 17.5V6.2l10-2v11"/><circle cx="6.5" cy="17.5" r="2.6"/><circle cx="16.5" cy="15.2" r="2.6"/></svg>
+            <svg class="i-bar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.6" height="14" rx="1.2"/><rect x="13.9" y="5" width="3.6" height="14" rx="1.2"/></svg>
+          </button>
         </span>
       </div>
       <div class="list-search" aria-hidden="true">
@@ -88,10 +89,13 @@
         </span>
         <span class="s-field">Search or start a new chat</span>
       </div>
-      <div class="list-filters" aria-hidden="true">
-        <span class="chip is-on" role="presentation">All</span>
-        <span class="chip" role="presentation">Unread</span>
-        <span class="chip" role="presentation">Groups</span>
+      <div class="list-filters">
+        <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-filter="unread" aria-pressed="false">Unread</button>
+        <span class="chip is-deco" role="presentation" aria-hidden="true">Groups</span>
+        <span class="chip is-deco" role="presentation" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg>
+        </span>
       </div>
       <button class="list-row" id="openChat">
         <span class="avatar" data-avatar></span>
@@ -104,7 +108,16 @@
           <span class="badge">1</span>
         </span>
       </button>
-      <p class="list-hint">Took chat to open the message.</p>
+      <p class="list-hint">
+        <span class="hint-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4.5" y="10.5" width="15" height="10" rx="2.4"/>
+            <path d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.6 0v2.7"/>
+            <path d="M12 14.3v2.4"/>
+          </svg>
+        </span>
+        <span>Took the chat to open the message.</span>
+      </p>
     </section>
 
     <section class="scene" id="scene-chat" aria-label="Percakapan">

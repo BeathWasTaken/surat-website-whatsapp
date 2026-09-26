@@ -202,6 +202,40 @@ window.Joki = window.Joki || {};
 
   function syncBtn() { musicBtn.setAttribute('aria-pressed', String(!muted)); }
 
+  /* Tombol musik di header daftar chat:
+     klik pertama → putar lagu pertama, klik berikutnya → jeda / lanjutkan.
+     Berbeda dari #musicBtn di footer yang cuma mute. */
+  function initListBtn() {
+    const btn = $('#listMusicBtn');
+    if (!btn) return;
+    const a = ensureSong();
+    if (!a) { btn.hidden = true; return; }
+
+    /* Status pakai flag sendiri, bukan a.paused — yang itu read-only
+       dan tidak selalu sinkron di semua browser. */
+    let on = false;
+    const paint = () => {
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Jeda lagu' : 'Putar lagu');
+    };
+    a.addEventListener('play', () => { on = true; paint(); });
+    a.addEventListener('pause', () => { on = false; paint(); });
+    a.addEventListener('ended', () => { on = false; paint(); });
+
+    btn.addEventListener('click', () => {
+      initAudio();
+      if (muted) { muted = false; syncBtn(); }
+      if (on) {
+        a.pause();
+      } else {
+        if (curIdx < 0) loadTrack(0, false);
+        if (a.ended) a.currentTime = 0;
+        a.play().then(() => { on = true; paint(); }, () => { on = false; paint(); });
+      }
+    });
+    paint();
+  }
+
   function init() {
     musicBtn.addEventListener('click', () => {
       muted = !muted;
@@ -209,6 +243,7 @@ window.Joki = window.Joki || {};
       if (song) { if (muted) song.pause(); else song.play().catch(() => {}); }
     });
     syncBtn();
+    initListBtn();
   }
 
   J.music = { init, addBubble, get muted() { return muted; }, get current() { return curLagu(); } };

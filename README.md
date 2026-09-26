@@ -167,28 +167,33 @@ dihitung otomatis dari panjang teks.
 ### Layar daftar chat
 
 Bentuknya mengikuti WhatsApp: judul "Chats" rata kiri dengan ikon **⋮** lalu
-**+** di kanan, search bar pill di bawahnya, lalu deretan chip filter.
+tombol musik di kanan, search bar pill di bawahnya, lalu deretan chip filter.
 
-Ikon **⋮**, **+**, search bar, dan chip filter itu **murni hiasan** — tidak
-melakukan apa-apa kalau diketuk. Semuanya dibungkus `aria-hidden="true"` dan
-`pointer-events:none`, jadi tidak masuk urutan tab dan tidak bisa diklik.
-Cuma baris chat-nya (`#openChat`) yang benar-benar berfungsi.
+| Bagian      | Kelas / id            | Status                                        |
+| ----------- | --------------------- | --------------------------------------------- |
+| Ikon ⋮      | `.head-btn.is-deco`   | Hiasan                                        |
+| Ikon musik  | `#listMusicBtn`       | **Fungsional** — putar / jeda / lanjutkan      |
+| Search bar  | `.list-search`        | Hiasan                                        |
+| Chip All    | `button.chip`         | **Fungsional** — ganti sorotan                |
+| Chip Unread | `button.chip`         | **Fungsional** — ganti sorotan                |
+| Chip Groups | `.chip.is-deco`       | Hiasan                                        |
+| Chevron ↓   | `.chip.is-deco`       | Hiasan                                        |
+| Baris chat  | `#openChat`           | **Fungsional** — membuka surat                |
 
-| Bagian    | Kelas             | Catatan                                            |
-| --------- | ----------------- | -------------------------------------------------- |
-| Ikon ⋮    | `.head-btn`       | Polos, warna teks biasa                            |
-| Ikon +    | `.head-btn.is-fab`| Lingkaran hijau `--wa-accent` + bayangan lembut     |
-| Chip aktif| `.chip.is-on`     | Latar hijau `--wa-accent`, teks putih              |
-| Chip lain | `.chip`           | Latar `#f0f2f5`, teks `--ink`                      |
+Elemen hiasan memakai `aria-hidden="true"` + `pointer-events:none`, jadi tidak
+bisa diklik dan tidak masuk urutan tab.
 
-State "terpilih" ditandai kelas `is-on` di HTML, jadi **All** sudah aktif
-secara default tanpa perlu JavaScript.
+**Chip All / Unread** sengaja menampilkan isi yang sama persis — yang berubah
+hanya sorotan hijau (`is-on` + `aria-pressed`). Logikanya ada di
+`initFilters()` pada `chat.js`. Tambah filter baru cukup bikin
+`<button class="chip" data-filter="nama">`; tidak perlu ubah CSS.
 
-Kalau mau search bar atau chip-nya bisa diketuk beneran, ganti
-`<div class="list-search">` dengan `<input class="list-search">` dan chip
-`<span>` dengan `<button>`, lalu kembalikan `pointer-events:auto`. Untuk
-mengganti chip aktif, pindahkan kelas `is-on` dan hook
-`.list-filters` ke `chat.js`.
+**Tombol musik** memakai `aria-pressed` sebagai penanda, dan ikonnya
+berganti dari not musik ke jeda saat lagu berjalan. Klik pertama memuat
+lagu pertama dari `config.json` → `daftar_lagu`, klik berikutnya jeda, lalu
+klik lagi melanjutkan. Statusnya disimpan di flag `on` sendiri, bukan
+`audio.paused`, karena properti itu read-only dan tidak selalu sinkron.
+Kalau `daftar_lagu` kosong, tombolnya otomatis disembunyikan.
 
 ---
 

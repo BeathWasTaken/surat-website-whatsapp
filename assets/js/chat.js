@@ -487,7 +487,24 @@ window.Joki = window.Joki || {};
     }, 900);
   }
 
+  /* Filter All / Unread. Isinya sengaja sama — yang beda cuma
+    Sorotan chip aktifnya, sesuai permintaan. */
+  function initFilters() {
+    const chips = Array.from(document.querySelectorAll('.list-filters button.chip'));
+    chips.forEach(btn => {
+      btn.addEventListener('click', () => {
+        chips.forEach(b => {
+          const on = b === btn;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        J.core.blip('in');
+      });
+    });
+  }
+
   function init() {
+    initFilters();
     $('#openChat').addEventListener('click', () => {
       J.core.initAudio();
       goTo('chat');
