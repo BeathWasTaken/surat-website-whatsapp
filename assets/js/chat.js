@@ -68,7 +68,7 @@ window.Joki = window.Joki || {};
     const row = document.createElement('div');
     row.className = 'row in' + (lastSender !== 'in' ? ' first' : '');
     row.innerHTML = '<div class="bubble typing pop" aria-label="typing"><i></i><i></i><i></i></div>';
-    box.appendChild(row); setStatus('sedang mengetik…'); scrollDown();
+    box.appendChild(row); setStatus('typing…'); scrollDown();
     return row;
   }
   const hideTyping = row => { row.remove(); setStatus('online'); };
