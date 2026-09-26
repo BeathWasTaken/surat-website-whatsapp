@@ -252,7 +252,7 @@
     animation:ring 2s ease-out infinite;
   }
   @keyframes ring{ from{ transform:scale(1); opacity:.7; } to{ transform:scale(2); opacity:0; } }
-  .list-hint{ margin:1.1rem 1.25rem 0; font-size:.85rem; color:var(--ink-soft); }
+  .list-hint{ margin:1.1rem 1.25rem 0; font-size:.85rem; line-height:1.45; color:var(--ink-soft); text-align:center; text-wrap:balance; }
 
   #scene-chat{
     display:flex; flex-direction:column; background:var(--chat-bg); z-index:2;
