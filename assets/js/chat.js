@@ -491,7 +491,12 @@ window.Joki = window.Joki || {};
     $('#openChat').addEventListener('click', () => {
       J.core.initAudio();
       goTo('chat');
-      if (!state.started) { state.started = true; setTimeout(() => playPage(0), 750); }
+      /* Kalau chat sudah dikosongkan (mis. setelah menekan tombol back),
+         putar lagi dari awal — jangan sampai masuk ke layar yang kosong. */
+      if (!state.started || box.children.length === 0) {
+        state.started = true;
+        setTimeout(() => playPage(0), 750);
+      }
     });
 
     setBackEnabled(false);

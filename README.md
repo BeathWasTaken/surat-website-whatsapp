@@ -162,38 +162,37 @@ dihitung otomatis dari panjang teks.
 | Geser / panah / `Esc`           | Navigasi & tutup lightbox      |
 | Ketuk "Tidak"                   | Tombolnya kabur terus          |
 | Tombol 🎵                       | Matikan / nyalakan musik       |
-| Panah ‹ di header               | Balik ke daftar chat — **hanya aktif setelah surat selesai** |
+| Panah ‹ di header               | Balik ke daftar chat — **hanya aktif setelah surat selesai**. Kalau lalu dibuka lagi, surat diputar dari awal |
 
 ---
 
-## 🎨 Menyesuaikan warna & gradient
+## 🎨 Menyesuaikan warna
 
-Semua warna dan gradient ada di `:root` pada `assets/css/style.css`:
+Semua warna ada di `:root` pada `assets/css/style.css`. Semuanya **warna rata**
+— sengaja tanpa gradient supaya tidak terlihat norak:
 
 ```css
 :root{
-  --wa-accent:#00a884;      /* warna utama   */
-  --chat-bg:#efeae2;        /* latar chat    */
-  --ink:#111b21;            /* teks          */
-
-  --g-head:linear-gradient(...);        /* header chat   */
-  --g-bubble-in:linear-gradient(...);   /* bubble masuk  */
-  --g-bubble-out:linear-gradient(...);  /* bubble keluar */
-  --g-field:linear-gradient(...);       /* kolom ketik   */
-  --g-footer:linear-gradient(...);      /* bar bawah     */
-  --g-dialog:linear-gradient(...);      /* popup konfirmasi */
-  --g-key:linear-gradient(...);         /* tombol keypad */
-  --g-chip:linear-gradient(...);        /* chip pilihan  */
-  --g-accent:linear-gradient(...);      /* tombol hijau  */
-  --g-list:linear-gradient(...);        /* layar daftar  */
-  --g-pill:linear-gradient(...);        /* pil "Hari ini" */
-  --g-pill-note:linear-gradient(...);   /* pil catatan   */
-
-  --sheen:inset 0 1px 0 rgba(255,255,255,.55);  /* highlight tepi */
+  --wa-head:#008069;      /* header chat      */
+  --wa-accent:#00a884;    /* warna utama      */
+  --bubble-in:#ffffff;   /* bubble masuk     */
+  --bubble-out:#d9fdd3;   /* bubble keluar    */
+  --chat-bg:#efeae2;      /* latar chat       */
+  --ink:#111b21;          /* teks utama       */
+  --ink-soft:#667781;     /* teks sekunder    */
+  --tick:#53bdeb;         /* centang biru     */
+  --avatar:#b4506b;       /* avatar           */
 }
 ```
 
 Ganti satu nilai itu sudah cukup — tidak perlu menyentuh HTML atau JS.
+
+Efek kedalaman datang dari **opasitas bayangan**, bukan gradient.
+Kalau ingin lebih kalem, turunkan angka setelah titik di `box-shadow`:
+
+```css
+.bubble{ box-shadow:0 1px .5px rgba(11,20,26,.07); }  /* .07 = sangat halus */
+```
 
 ---
 
