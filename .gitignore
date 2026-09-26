@@ -1,0 +1,30 @@
+# Dependencies (tidak dipakai — situs statis murni)
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Vercel
+.vercel/
+
+# Editor / tooling
+.kilo/
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Log & environment
+*.log
+npm-debug.log*
+.env
+.env.*
+!.env.example
+
+# Berkas uji
+__smoke.js
+__http.js
+__verify.js

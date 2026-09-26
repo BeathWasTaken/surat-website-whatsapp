@@ -1,0 +1,15 @@
+# Berkas yang tidak perlu ikut ke deployment.
+# (.gitignore tetap dipakai Git, .vercelignore dipakai Vercel — keduanya terpisah.)
+
+.git
+.gitignore
+.kilo
+.vscode
+.idea
+
+# Hanya untuk mesin lokal
+MULAI.cmd
+
+# Dokumentasi — tetap ada di repo GitHub, tidak perlu ikut ter-deploy
+README.md
+**/README.md
