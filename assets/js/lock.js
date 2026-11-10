@@ -1,6 +1,3 @@
-/* =========================================================
-   lock.js — layar kunci (passcode) + dialog konfirmasi
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {
@@ -10,13 +7,14 @@ window.Joki = window.Joki || {};
 
   const lockEl = J.core.scenes.lock, confirmEl = J.core.scenes.confirm;
   const dialog = $('#dialog');
-  const pinDots = $('#pinDots'), lockMsg = $('#lockMsg'), lockSub = $('#lockSub');
+  const pinDots = $('#pinDots'), lockSub = $('#lockSub');
   const yesBtn = $('#yesBtn'), noBtn = $('#noBtn'), noSlot = $('#noSlot');
+  const forgotBtn = $('#forgotBtn');
 
   const SUB_DEFAULT = lockSub.textContent;
+  const WRONG_CODE = forgotBtn ? forgotBtn.textContent.trim() : 'Lupa kode?';
   let entered = '', fails = 0, lockBusy = false, flyer = null;
 
-  /* ---------- dialog konfirmasi ---------- */
   function makeFlyer() {
     if (flyer) return flyer;
     const f = noBtn.cloneNode(true);
@@ -93,11 +91,10 @@ window.Joki = window.Joki || {};
     lockEl.inert = false;
     state.current = 'lock';
     entered = ''; fails = 0; renderPin();
-    lockMsg.textContent = ''; lockBusy = false;
+    lockBusy = false;
     resetSub();
   }
 
-  /* ---------- passcode ---------- */
   function showHint() { lockSub.textContent = J.CONFIG.hint || 'Petunjuknya belum diisi di pengaturan.'; }
   function resetSub() { lockSub.textContent = SUB_DEFAULT; }
   const renderPin = () => Array.from(pinDots.children).forEach((d, i) => d.classList.toggle('filled', i < entered.length));
@@ -105,17 +102,20 @@ window.Joki = window.Joki || {};
   function checkCode() {
     if (entered === J.CONFIG.passcode) {
       lockBusy = true;
-      lockMsg.textContent = '';
+      resetSub();
       setTimeout(() => {
         openConfirm();
         setTimeout(() => { entered = ''; renderPin(); lockBusy = false; }, 500);
       }, 250);
     } else {
       fails++;
-      lockMsg.textContent = 'Kodenya belum tepat.';
+      lockSub.textContent = WRONG_CODE;
       if (fails >= 2 && J.CONFIG.hint) showHint();
       pinDots.classList.remove('shake'); void pinDots.offsetWidth; pinDots.classList.add('shake');
-      setTimeout(() => { entered = ''; renderPin(); }, 420);
+      setTimeout(() => {
+        entered = ''; renderPin();
+        if (lockSub.textContent === WRONG_CODE) resetSub();
+      }, 420);
     }
   }
   function press(k) {
@@ -132,7 +132,7 @@ window.Joki = window.Joki || {};
     pinDots.innerHTML = '';
     for (let i = 0; i < code.length; i++) pinDots.appendChild(document.createElement('span'));
 
-    $('#forgotBtn').addEventListener('click', showHint);
+    forgotBtn.addEventListener('click', showHint);
     $('#keypad').addEventListener('click', e => {
       const btn = e.target.closest('.key'); if (!btn) return;
       btn.classList.add('pressed'); setTimeout(() => btn.classList.remove('pressed'), 130);
@@ -154,7 +154,6 @@ window.Joki = window.Joki || {};
       if (state.confirmOpen && e.key === 'Escape') { e.preventDefault(); closeConfirm(); }
     });
 
-    /* tombol suara notifikasi */
     $('#soundBtn').addEventListener('click', e => {
       J.core.soundOn = !J.core.soundOn;
       e.currentTarget.setAttribute('aria-pressed', String(J.core.soundOn));

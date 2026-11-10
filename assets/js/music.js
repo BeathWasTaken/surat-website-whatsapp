@@ -1,8 +1,4 @@
-﻿/* =========================================================
-   music.js â€” kartu pemutar lagu ala Spotify
-   Sumber file: assets/audio/ (lihat config.json > daftar_lagu)
-   ========================================================= */
-window.Joki = window.Joki || {};
+﻿window.Joki = window.Joki || {};
 
 (function (J) {
   'use strict';
@@ -17,8 +13,6 @@ window.Joki = window.Joki || {};
   };
 
   let song = null, muted = false, curIdx = -1;
-  /* Dibaca lewat getter, bukan di-cache, supaya tetap sinkron
-     setelah config.json selesai dimuat. */
   const LAGUS = () => J.CONFIG.daftar_lagu;
   const curLagu = () => LAGUS()[curIdx] || null;
 
@@ -202,17 +196,12 @@ window.Joki = window.Joki || {};
 
   function syncBtn() { musicBtn.setAttribute('aria-pressed', String(!muted)); }
 
-  /* Tombol musik di header daftar chat:
-     klik pertama → putar lagu pertama, klik berikutnya → jeda / lanjutkan.
-     Berbeda dari #musicBtn di footer yang cuma mute. */
   function initListBtn() {
     const btn = $('#listMusicBtn');
     if (!btn) return;
     const a = ensureSong();
     if (!a) { btn.hidden = true; return; }
 
-    /* Status pakai flag sendiri, bukan a.paused — yang itu read-only
-       dan tidak selalu sinkron di semua browser. */
     let on = false;
     const paint = () => {
       btn.setAttribute('aria-pressed', String(on));

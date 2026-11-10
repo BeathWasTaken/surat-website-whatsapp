@@ -1,15 +1,8 @@
-/* =========================================================
-   config.js — pemuat konfigurasi
-   Sumber kebenaran: /config.json
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {
   'use strict';
 
-  /* Nilai cadangan dipakai hanya bila config.json gagal dibaca,
-     mis. saat index.html dibuka langsung lewat klik ganda (file://).
-     Isi dengan data yang sama seperti config.json. */
   const FALLBACK = {
     passcode: '140914',
     hint: 'Tanggal jadian kita (tanggal, bulan, 2 digit tahun).',
@@ -117,7 +110,6 @@ window.Joki = window.Joki || {};
       });
   }
 
-  /* Cadangan untuk browser/lingkungan yang tidak punya fetch. */
   function viaXHR(url) {
     return new Promise((resolve, reject) => {
       const x = new XMLHttpRequest();

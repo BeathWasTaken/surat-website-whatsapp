@@ -1,3 +1,2 @@
-# Surat ini bersifat pribadi — jangan diindeks mesin pencari.
 User-agent: *
 Disallow: /

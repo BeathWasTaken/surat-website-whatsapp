@@ -1,6 +1,3 @@
-/* =========================================================
-   lightbox.js — penampil foto layar penuh (swipe/drag)
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {

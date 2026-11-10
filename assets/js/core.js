@@ -1,6 +1,3 @@
-/* =========================================================
-   core.js — utilitas bersama, audio, navigasi scene
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {
@@ -11,7 +8,6 @@ window.Joki = window.Joki || {};
   const sleep = ms => new Promise(r => setTimeout(r, ms));
   const reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  /* Hearts sengaja TIDAK di-reset oleh resetChat() — dipakai di halaman penutup. */
   const state = { hearts: 0, current: 'lock', confirmOpen: false, started: false };
 
   function fill(s) {
@@ -22,7 +18,6 @@ window.Joki = window.Joki || {};
   }
   const hhmm = () => new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false });
 
-  /* ---------- audio synthesized (tidak butuh file) ---------- */
   let ac = null, soundOn = true;
   function initAudio() {
     if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { ac = null; } }
@@ -45,7 +40,6 @@ window.Joki = window.Joki || {};
   }
   const buzz = ms => { try { navigator.vibrate && navigator.vibrate(ms); } catch (e) {} };
 
-  /* ---------- navigasi scene ---------- */
   const scenes = {
     lock: $('#scene-lock'),
     confirm: $('#scene-confirm'),
@@ -62,7 +56,6 @@ window.Joki = window.Joki || {};
     });
   }
 
-  /* ---------- terapkan identitas dari config ---------- */
   function applyProfile() {
     const C = J.CONFIG;
     $$('[data-sender]').forEach(el => { el.textContent = C.nama_pengirim; });

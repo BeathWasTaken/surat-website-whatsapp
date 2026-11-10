@@ -1,6 +1,4 @@
 {
-  "_comment": "KONFIGURASI UTUH. Edit file ini saja, lalu muat ulang halaman. Folder lagu: assets/audio/",
-
   "passcode": "140914",
   "hint": "Tanggal jadian kita (tanggal, bulan, 2 digit tahun).",
 
