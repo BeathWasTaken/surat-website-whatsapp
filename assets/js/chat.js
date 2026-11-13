@@ -218,6 +218,7 @@ window.Joki = window.Joki || {};
     if (window.ResizeObserver) new ResizeObserver(layout).observe(strip);
   }
 
+<<<<<<< HEAD
   function addGallery2() {
     const photos = J.CONFIG.foto_bareng2;
     if (!photos.length) return;
@@ -265,6 +266,8 @@ window.Joki = window.Joki || {};
     if (window.ResizeObserver) new ResizeObserver(layout).observe(strip);
   }
 
+=======
+>>>>>>> b47547b5fe007c44089a8320a2ff4fb2c8259ce0
   function addVoice(item) {
     return appendBubble('in', 'voice', b => {
       const N = 30, bars = [];
