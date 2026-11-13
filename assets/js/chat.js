@@ -1,6 +1,3 @@
-/* =========================================================
-   chat.js — bubble, reaksi, counter, composer, orkestrasi
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {
@@ -12,7 +9,6 @@ window.Joki = window.Joki || {};
   const composer = $('#composer'), chips = $('#chips'), composerText = $('#composerText');
   const backBtn = $('#backBtn');
 
-  /* Tombol back baru bisa dipencet setelah surat selesai (showEnd). */
   const setBackEnabled = on => {
     backBtn.disabled = !on;
     backBtn.setAttribute('aria-disabled', String(!on));
@@ -32,7 +28,6 @@ window.Joki = window.Joki || {};
   };
   const LOCK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
 
-  /* ---------- bubble primitives ---------- */
   function appendPill(text, note) {
     const p = document.createElement('div');
     p.className = 'pill' + (note ? ' note' : '');
@@ -73,7 +68,6 @@ window.Joki = window.Joki || {};
   }
   const hideTyping = row => { row.remove(); setStatus('online'); };
 
-  /* ---------- reaksi cinta (double-tap) ---------- */
   function enableReact(row, b) {
     let last = 0;
     b.addEventListener('click', () => {
@@ -102,7 +96,6 @@ window.Joki = window.Joki || {};
     });
   }
 
-  /* ---------- counter tanggal ---------- */
   function parseDate(s) {
     if (!s) return null;
     const p = String(s).split('-').map(Number);
@@ -178,7 +171,6 @@ window.Joki = window.Joki || {};
     });
   }
 
-  /* ---------- galeri di dalam chat ---------- */
   function addGallery() {
     const photos = J.CONFIG.foto_bareng;
     if (!photos.length) return;
@@ -226,7 +218,53 @@ window.Joki = window.Joki || {};
     if (window.ResizeObserver) new ResizeObserver(layout).observe(strip);
   }
 
-  /* ---------- voice note ---------- */
+  function addGallery2() {
+    const photos = J.CONFIG.foto_bareng2;
+    if (!photos.length) return;
+    let strip, hint;
+    appendBubble('in', 'gal', b => {
+      strip = document.createElement('div');
+      strip.className = 'gal-scroll';
+      photos.forEach((p, i) => {
+        const fig = document.createElement('figure');
+        fig.className = 'gal-item';
+        const img = document.createElement('img');
+        img.src = p.src; img.alt = p.caption || 'Foto'; img.loading = 'lazy';
+        img.addEventListener('click', e => { e.stopPropagation(); J.lightbox.open(photos, i); });
+        fig.appendChild(img);
+        if (p.caption) {
+          const c = document.createElement('figcaption');
+          c.className = 'gal-cap'; c.textContent = fill(p.caption);
+          fig.appendChild(c);
+        }
+        strip.appendChild(fig);
+      });
+      b.appendChild(strip);
+      hint = document.createElement('div');
+      hint.className = 'gal-hint';
+      b.appendChild(hint);
+      b.appendChild(makeMeta('in'));
+      b.querySelector('.meta').style.cssText = 'float:none;display:flex;justify-content:flex-end;margin:.1rem .3rem 0;';
+      strip.addEventListener('scroll', scrollDown, { passive: true });
+    });
+
+    const MIN = 128, MAX = 264, GAP = 6.4, PAD = 8;
+    const layout = () => {
+      const avail = strip.clientWidth;
+      if (!avail || !strip.isConnected) return;
+      const room = Math.max(avail - PAD, 1);
+      const per = Math.max(1, Math.min(photos.length, Math.floor((room + GAP) / (MIN + GAP))));
+      const w = Math.min(MAX, (room - (per - 1) * GAP) / per);
+      strip.style.setProperty('--gw', w.toFixed(2) + 'px');
+      strip.style.setProperty('--gh', (w * 0.75).toFixed(2) + 'px');
+      strip.style.justifyContent = photos.length <= per ? 'center' : 'flex-start';
+      if (strip.scrollWidth <= strip.clientWidth + 2) hint.remove();
+      else hint.textContent = '⟨ geser ke kanan ⟩';
+    };
+    requestAnimationFrame(layout);
+    if (window.ResizeObserver) new ResizeObserver(layout).observe(strip);
+  }
+
   function addVoice(item) {
     return appendBubble('in', 'voice', b => {
       const N = 30, bars = [];
@@ -276,7 +314,6 @@ window.Joki = window.Joki || {};
     });
   }
 
-  /* ---------- kirim pesan keluar ---------- */
   function sendOut(text, id) {
     const { b } = appendBubble('out', '', bb => {
       const s = document.createElement('span'); s.className = 'txt'; s.textContent = text;
@@ -289,7 +326,6 @@ window.Joki = window.Joki || {};
     return sleep(1300);
   }
 
-  /* ---------- pilihan ---------- */
   function askChoice(item) {
     return new Promise(resolve => {
       composer.hidden = true; chips.hidden = false; chips.className = 'chips'; chips.innerHTML = '';
@@ -303,7 +339,6 @@ window.Joki = window.Joki || {};
     });
   }
 
-  /* ---------- hujan hati ---------- */
   const HEART_COLORS = ['#e5567a', '#ff8fa8', '#f4b6c2', '#ff6b8b', '#e0245e'];
   function spawnHearts(n) {
     if (reduced) return;
@@ -331,7 +366,6 @@ window.Joki = window.Joki || {};
   }
   function stopRain() { if (loveTimer) { clearInterval(loveTimer); loveTimer = 0; } }
 
-  /* ---------- composer (ketik otomatis) ---------- */
   function resetComposer() {
     composer.classList.remove('ready', 'sent');
     composerText.textContent = 'Type a message';
@@ -364,7 +398,6 @@ window.Joki = window.Joki || {};
     resetComposer();
     await sleep(700);
     advBusy = false;
-    /* Kalau halaman sudah berganti (mis. resetChat) jangan ikut majukan. */
     if(runId !== myRun) return;
     action();
   }
@@ -388,7 +421,6 @@ window.Joki = window.Joki || {};
     showAdvancer('Selanjutnya', () => playPage(i + 1));
   }
 
-  /* ---------- orkestrasi ---------- */
   async function play(items, id) {
     for (const item of items) {
       if (id !== runId) return;
@@ -402,6 +434,7 @@ window.Joki = window.Joki || {};
       case 'system': appendPill(fill(item.text)); await sleep(700); return;
       case 'love': loveRain(); return;
       case 'gallery': addGallery(); blip('in'); await sleep(1100); return;
+      case 'gallery2': addGallery2(); blip('in'); await sleep(1100); return;
       case 'music':
         if (J.music.muted) { addText('Musik aku matiin dulu, biar nggak ganggu. Bisa dinyalain lagi dari tombol nota di atas.'); await sleep(1000); return; }
         J.music.addBubble(); await sleep(1400); return;
@@ -487,8 +520,6 @@ window.Joki = window.Joki || {};
     }, 900);
   }
 
-  /* Filter All / Unread. Isinya sengaja sama — yang beda cuma
-    Sorotan chip aktifnya, sesuai permintaan. */
   function initFilters() {
     const chips = Array.from(document.querySelectorAll('.list-filters button.chip'));
     chips.forEach(btn => {
@@ -508,8 +539,6 @@ window.Joki = window.Joki || {};
     $('#openChat').addEventListener('click', () => {
       J.core.initAudio();
       goTo('chat');
-      /* Kalau chat sudah dikosongkan (mis. setelah menekan tombol back),
-         putar lagi dari awal — jangan sampai masuk ke layar yang kosong. */
       if (!state.started || box.children.length === 0) {
         state.started = true;
         setTimeout(() => playPage(0), 750);

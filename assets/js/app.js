@@ -1,6 +1,3 @@
-/* =========================================================
-   app.js — titik masuk: muat config, lalu nyalakan modul
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {

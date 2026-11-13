@@ -1,26 +1,19 @@
-/* =========================================================
-   config.js — pemuat konfigurasi
-   Sumber kebenaran: /config.json
-   ========================================================= */
 window.Joki = window.Joki || {};
 
 (function (J) {
   'use strict';
 
-  /* Nilai cadangan dipakai hanya bila config.json gagal dibaca,
-     mis. saat index.html dibuka langsung lewat klik ganda (file://).
-     Isi dengan data yang sama seperti config.json. */
   const FALLBACK = {
-    passcode: '140914',
+    passcode: '261025',
     hint: 'Tanggal jadian kita (tanggal, bulan, 2 digit tahun).',
     nama_panggilan: 'Sayang',
-    nama_pengirim: 'Aku',
-    start_date: '2024-09-14',
-    tanggal_lahir: '2006-09-14',
-    usia_ulang_tahun: 20,
-    wa_number: '6281234567890',
+    nama_pengirim: 'Dudul❤️',
+    start_date: '2025-10-26',
+    tanggal_lahir: '2008-11-20',
+    usia_ulang_tahun: 18,
+    wa_number: '6287728306335',
     wa_pesan: 'Aku juga sayang kamu ❤️',
-    avatar_src: '',
+    avatar_src: 'img/Gambar_5.jpg',
     wallpaper_src: '',
     ulang_lagu: true,
     daftar_lagu: [
@@ -29,12 +22,21 @@ window.Joki = window.Joki || {};
       { src: 'assets/audio/lagu3.mp3', judul: 'Hari-Hari Kita', artis: 'Aku', cover: '' }
     ],
     foto_bareng: [
-      { src: 'https://picsum.photos/seed/kita01/700/900', caption: 'Yang pertama, dan paling aku suka.' },
-      { src: 'https://picsum.photos/seed/kita02/700/900', caption: 'Sore itu, tempat paling ramai. Tapi kita nggak polio.' },
-      { src: 'https://picsum.photos/seed/kita03/700/900', caption: 'Foto paling sepi, tapi paling senang.' },
-      { src: 'https://picsum.photos/seed/kita04/700/900', caption: 'Kamu lagi ngambek. Tetap aku suka, kok.' },
-      { src: 'https://picsum.photos/seed/kita05/700/900', caption: 'Dan ini, karena dua orang kompromis.' }
+    { "src": "assets/img/Gambar_1.jpg", "caption": "Awal Mula kita bertemu, happy banget kita bisa ketemu setelah 1 year LDR. " },
+    { "src": "assets/img/Gambar_3.jpg", "caption": "Malam itu, bunga cantik mirip seperti indah-nya dirimu sayang." },
+    { "src": "assets/img/Gambar_14.jpg", "caption": "The first PHOTOBOOTH, malu tapi paling senang." },
+    { "src": "assets/img/Gambar_2.jpg", "caption": "Kamu pose ngambek. random photo but i love it." },
+    { "src": "assets/img/Gambar_7.jpg", "caption": "Dan ini, PONI KAMU LUCUU BANGET EHEHEHE." }
     ],
+    foto_bareng2: [
+    { "src": "assets/img/Gambar_12.jpg", "caption": "blalalala. " },
+    { "src": "https://picsum.photos/seed/kita02/700/900", "caption": "Sore itu, tempat paling ramai. Tapi kita nggak polio." },
+    { "src": "https://picsum.photos/seed/kita03/700/900", "caption": "Foto paling sepi, tapi paling senang." },
+    { "src": "https://picsum.photos/seed/kita04/700/900", "caption": "Kamu lagi ngambek. Tetap aku suka, kok." },
+    { "src": "https://picsum.photos/seed/kita05/700/900", "caption": "Dan ini, karena dua orang kompromis." }
+
+    ],
+
     halaman: [
       { items: [
         { t: 'system', text: 'Ketuk dua kali pada pesannya buat ngasih ❤️' },
@@ -74,6 +76,7 @@ window.Joki = window.Joki || {};
         { t: 'text', text: 'Terima kasih udah jadi kamu. Terima kasih udah nemenin aku sampai sini.' },
         { t: 'heartsText', zero: 'Nggak ada ❤️ pun. Yaudah, nggak apa-apa. Aku tetap sayang, kok.', many: 'Dan kamu ngasih aku ❤️ {hearts} kali. Aku itung, lho.' },
         { t: 'text', text: 'Kalau kamu masih mau liat chat tadi, balas aja di bawah. Nanti aku ulangi dari awal.' },
+        { t: 'gallery2' },
         { t: 'love' },
         { t: 'end' }
       ]}
@@ -95,6 +98,7 @@ window.Joki = window.Joki || {};
     ulang_lagu: true,
     daftar_lagu: [],
     foto_bareng: [],
+    foto_bareng2: [],
     halaman: []
   };
 
@@ -103,6 +107,7 @@ window.Joki = window.Joki || {};
     c.passcode = String(c.passcode || '').replace(/\D/g, '');
     c.daftar_lagu = (c.daftar_lagu || []).filter(l => l && l.src);
     c.foto_bareng = (c.foto_bareng || []).filter(f => f && f.src);
+    c.foto_bareng2 = (c.foto_bareng2 ||[]).filter(f => f&& f.src);
     c.halaman = (c.halaman || []).map(h => ({ items: (h && h.items) || [] }));
     return c;
   }
@@ -117,7 +122,6 @@ window.Joki = window.Joki || {};
       });
   }
 
-  /* Cadangan untuk browser/lingkungan yang tidak punya fetch. */
   function viaXHR(url) {
     return new Promise((resolve, reject) => {
       const x = new XMLHttpRequest();
